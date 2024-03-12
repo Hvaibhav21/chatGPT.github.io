@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT UI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .chat-container {
+            width: 400px;
+            margin: 50px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .chat-messages {
+            padding: 10px;
+            overflow-y: scroll;
+            max-height: 300px;
+        }
+
+        .chat-message {
+            margin-bottom: 10px;
+        }
+
+        .message-self {
+            text-align: right;
+        }
+
+        .message-other {
+            text-align: left;
+        }
+
+        .message-bubble {
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            padding: 8px 12px;
+            display: inline-block;
+            max-width: 70%;
+        }
+
+        .message-text {
+            margin: 0;
+        }
+
+        .message-timestamp {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .chat-input {
+            padding: 10px;
+            background-color: #fff;
+            border-top: 1px solid #ccc;
+        }
+
+        .input-field {
+            width: calc(100% - 20px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .input-button {
+            padding: 8px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            ChatGPT
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will be added here dynamically -->
+        </div>
+        <div class="chat-input">
+            <input type="text" class="input-field" id="message-input" placeholder="Type a message...">
+            <button class="input-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            var messageInput = document.getElementById("message-input");
+            var message = messageInput.value.trim();
+            if (message !== "") {
+                addMessage(message, "self");
+                // Here you can send the message to the backend or process it further
+                // For demonstration purpose, let's just clear the input field
+                messageInput.value = "";
+            }
+        }
+
+        function addMessage(message, sender) {
+            var chatMessages = document.getElementById("chat-messages");
+            var messageWrapper = document.createElement("div");
+            messageWrapper.classList.add("chat-message", "message-" + sender);
+            var messageBubble = document.createElement("div");
+            messageBubble.classList.add("message-bubble");
+            var messageText = document.createElement("p");
+            messageText.classList.add("message-text");
+            messageText.innerText = message;
+            var messageTimestamp = document.createElement("p");
+            messageTimestamp.classList.add("message-timestamp");
+            messageTimestamp.innerText = new Date().toLocaleTimeString();
+            messageBubble.appendChild(messageText);
+            messageBubble.appendChild(messageTimestamp);
+            messageWrapper.appendChild(messageBubble);
+            chatMessages.appendChild(messageWrapper);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+        }
+    </script>
+</body>
+</html>
